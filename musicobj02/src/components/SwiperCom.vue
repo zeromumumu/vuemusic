@@ -13,7 +13,7 @@
 <script>
 import "swiper/css/swiper.css"
 import Swiper from "swiper"
-import { getBanner } from "@/api/index.js" //@指的是项目目录  src
+import { getBanner1 } from "@/api/index.js" //@指的是项目目录  src
 export default{
     name:'swiperCom',
     data(){
@@ -23,13 +23,17 @@ export default{
                 {pic:require("../assets/logo.png")},
                 {pic:require("../assets/logo.png")},
                 {pic:require("../assets/logo.png")},
+                {pic:require("../assets/logo.png")},
+                {pic:require("../assets/logo.png")},
+                {pic:require("../assets/logo.png")},
+                {pic:require("../assets/logo.png")},
             ]
         }
     },
+
     async mounted(){ //async...await  异步ajax请求函数
-        var res = await getBanner(1);
+        var res = await getBanner1(1);
         this.imgs = res.data.banners; 
-        console.log(this.imgs);
         var myswiper = new Swiper('#swiperIndex',{
             // loop:true, //循环模式
             // autoplay:true, //自动轮播
