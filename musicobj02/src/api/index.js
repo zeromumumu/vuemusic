@@ -10,6 +10,10 @@ export function getBanner1(type=0){
 export function getBanner2(limit=10){
     return axios.get(baseUrl+'/personalized?limit='+limit);
 }
+/////playlist/detail?id=24381616`
+export function getBanner3(id){
+    return axios.get(`${baseUrl}/playlist/detail?id=${id}`);
+}
 
 //对外抛出
-export default {getBanner1,getBanner2};
+export default {getBanner1,getBanner2,getBanner3};
