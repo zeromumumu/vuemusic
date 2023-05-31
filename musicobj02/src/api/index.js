@@ -15,5 +15,12 @@ export function getBanner3(id){
     return axios.get(`${baseUrl}/playlist/detail?id=${id}`);
 }
 
+export function getBanner4(id){
+    return axios.get(`${baseUrl}/lyric?id=${id}`);
+}
+
+export function getBanner5(keywords){
+    return axios.get(`${baseUrl}/search?keywords=${keywords}`);
+}
 //对外抛出
-export default {getBanner1,getBanner2,getBanner3};
+export default {getBanner1,getBanner2,getBanner3,getBanner4,getBanner5};

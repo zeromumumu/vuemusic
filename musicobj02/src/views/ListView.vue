@@ -12,6 +12,7 @@ import { onMounted ,reactive} from 'vue';
 import { getBanner3 } from "@/api/index.js" //@指的是项目目录  src
 import listviewTop from "@/components/ListViewTop.vue"
 import playList from "@/components/PlayList.vue"
+import store from '@/store';
 export default{
     name:"listview",
     setup(){
@@ -29,6 +30,9 @@ export default{
             var res = await getBanner3(id); //发生axios请求，获取歌单详情
             music.playlist = res.data.playlist;
             console.log(music.playlist);
+
+            //将当前专辑播放列表的数据传递到store中playlist中
+            store.commit("setPlayList",music.playlist.tracks);
         })
         return {music}
     },

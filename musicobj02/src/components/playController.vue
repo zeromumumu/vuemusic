@@ -1,23 +1,26 @@
 <template>
     <div class="playController">
         <div class="left">
-            <img :src="playlist[playCurrentIndex].al.picUrl" alt="">
+            <img :src="playlist[playCurrentIndex].al.picUrl" alt="" @click="show =!show">
             <div class="content">
                 <div class="title">{{ playlist[playCurrentIndex].name }}</div>
                 <div class="tips">横滑可以切换上下首</div>
             </div>
         </div>
         <div class="right">
-            <svg class="icon" aria-hidden="true" @click="kai">
+            <svg v-if="abc1" class="icon" aria-hidden="true" @click="play">
                     <use xlink:href="#icon-bofang1"></use>
             </svg>
-            <svg class="icon" aria-hidden="true" @click="ting">
+            <svg v-else class="icon" aria-hidden="true" @click="play">
                     <use xlink:href="#icon-iconstop"></use>
             </svg>
             <svg class="icon" aria-hidden="true">
                     <use xlink:href="#icon-liebiao1"></use>
             </svg>
         </div>
+
+        <!-- 歌曲详情页面 -->
+        <play-music v-show="show" :abc1="abc1" :play="play" :palyDetail="playlist[playCurrentIndex]" @back="show =! show"></play-music>
         <!-- 如何获取播放歌曲的mp3地址  https://music.163.com/song/media/outer/url?id=歌曲id.mp3 -->
         <!-- controls audio 标签属性，一般不显示 -->
 
@@ -25,20 +28,45 @@
     </div>
 </template>
 <script>
+import PlayMusic from './PlayMusic.vue';
 import { mapState } from 'vuex';
+import {getBanner4} from "@/api/index";
+import store from '@/store';
 export default{
     name:"playcontroller",
+    data(){
+        return {
+            abc1:true,
+            show:false
+        }
+    },
+    components:{
+        PlayMusic
+    },
+    async mounted(){
+        var res = await getBanner4(this.playlist[this.playCurrentIndex].id);
+        store.commit("setLyric",res.data.lrc.lyric);
+    },
+    async updated(){
+        var res = await getBanner4(this.playlist[this.playCurrentIndex].id);
+        store.commit("setLyric",res.data.lrc.lyric);
+    },
     computed:{
         ...mapState(["playlist","playCurrentIndex"]) //获取正在播放播曲列表，以及正在播放歌曲下标
     },
     methods:{
-        kai(){
+        play(){
+            if(this.$refs.audio.paused)
+            {
             //this.$refs.audio 获取audio标签
             this.$refs.audio.play();
-
-        },
-        ting(){
+            this.abc1 = false;
+            }
+            else{
             this.$refs.audio.pause();
+            this.abc1 = true;
+            }
+
         }
     }
 }

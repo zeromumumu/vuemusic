@@ -15,14 +15,24 @@ export default createStore({
         }
       } 
     ],
-    playCurrentIndex:0 //当前播放音乐在播放列表中的下标
-
+    playCurrentIndex:0, //当前播放音乐在播放列表中的下标
+    lyric:"abc",  //保存当前播放的歌词
+    isLogin:false //用户登录状态
   },
   getters: {
   },
   mutations: {
-    setPlayList(state,value){
+    setPlayList(state,value){  //定义一个函数用来修改state
       state.playlist = value;
+    },
+    setPlayindex(state,value){    //定义一个函数用来修改当前正在播放歌曲的下标
+      state.playCurrentIndex = value;
+    },
+    setLyric(state,value){
+      state.lyric = value;  //定义一个函数用来修改当前正在播放歌曲的歌词
+    },
+    pushPlayList(state,value){
+      state.playlist.push(value);
     }
   },
   actions: {
